@@ -1,0 +1,7 @@
+{% extends 'onlinecourse/base.html' %}
+{% block content %}
+<h1 class="mb-3">Exam results</h1><p class="lead">{{ course.name }}</p>
+<div class="alert {% if passed %}alert-success{% else %}alert-danger{% endif %}"><h2 class="h4">{% if passed %}Congratulations, {{ user.first_name|default:user.username }}!{% else %}Keep learning, {{ user.first_name|default:user.username }}.{% endif %}</h2><p class="mb-1">{% if passed %}You passed the exam.{% else %}You did not pass this attempt.{% endif %}</p><strong>Score: {{ score|floatformat:0 }}% ({{ earned }}/{{ total }} points)</strong><div>Passing score: 70%</div></div>
+{% for result in results %}<article class="card mb-3"><div class="card-body py-3"><div class="d-flex justify-content-between"><h3 class="h6">{{ forloop.counter }}. {{ result.question.question_text }}</h3><span class="badge {% if result.correct %}bg-success{% else %}bg-danger{% endif %}">{% if result.correct %}Correct{% else %}Incorrect{% endif %}</span></div><ul class="list-unstyled mb-0">{% for choice in result.choices %}<li class="{% if choice.correct %}text-success{% elif choice.selected %}text-danger{% else %}text-secondary{% endif %}">{% if choice.selected %}☑{% else %}☐{% endif %} {{ choice.text }}{% if choice.correct %} — Correct answer{% endif %}</li>{% endfor %}</ul></div></article>{% endfor %}
+<a class="btn btn-primary" href="{% url 'onlinecourse:course_details' course.id %}">Back to course</a>
+{% endblock %}

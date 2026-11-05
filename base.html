@@ -1,0 +1,6 @@
+{% load static %}
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Online Course</title><link rel="stylesheet" href="{% static 'onlinecourse/bootstrap.min.css' %}"></head>
+<body class="bg-light"><nav class="navbar navbar-dark bg-dark"><div class="container"><a class="navbar-brand" href="{% url 'onlinecourse:index' %}">Online Course</a><span class="text-white">{% if user.is_authenticated %}{{ user.get_full_name|default:user.username }}{% else %}<a class="text-white" href="{% url 'login' %}">Log in</a>{% endif %}</span></div></nav>
+<main class="container py-4">{% block content %}{% endblock %}</main></body></html>
